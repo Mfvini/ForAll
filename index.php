@@ -24,18 +24,27 @@ $url = isset($_GET['url']) ? explode('/', $_GET['url']) : ['home'];
 //Se a URL for 'paciente', vira 'PacienteController'
 $controllerName = ucfirst($url[0]) . 'Controller';
 
-//Simulando uma resposta da API
-$response = [
-    "status" => "success",
-    "message" => "Conectado ao backend com sucesso",
-    "controller_alvo" => $controllerName
-];
+//Caminho do arquivo do Controller
+$controllerFile = "app/controllers/{$controllerName}.php";
 
-echo json_encode($response);
+//Lógica de Execução
+if (file_exists($controllerFile)) {
+    require_once $controllerFile; //Carrega o arquivo do Controller
+    if (class_exists($controllerName)) {
+        $controller = new $controllerName();
 
-/*echo "<h1>Estrutura MVC-FOR ALL</h1>";
-echo "<p>Você está tentando acessar <strong>$controllerName</strong></p>";*/
-
-//No futuro, aqui o index vai dar um 'new $controllerName()'
+        //chama o método index()
+        if (method_exists($controller, 'index')) {
+            $controller->index();
+        } else {
+            echo json_encode(["error" => "Método index não encontrado no controller."]);
+        }
+    } else {
+        echo json_encode(["error" => "Controller não encontrado."]);
+    }
+} else {
+    // Se o arquivo não existe, a rota não existe
+    echo json_encode(["error" => "Rota ou Controller não encontrado"]);
+}
 
 ?>
