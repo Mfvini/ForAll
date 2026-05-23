@@ -1,4 +1,5 @@
-require_once 'app/database/UsuarioRepository.php';
+<?php
+require_once 'app/models/UsuarioRepository.php';
 
 class UsuarioController {
     //1. Endpoint de Cadastro (POST/usuarios ou tratado por sua rota)
@@ -8,12 +9,12 @@ class UsuarioController {
         $dados = json_decode($json,true);
 
         //Validação basica
-        if(!isset($dados['nome']) || !isset($dados['email']) || !isset($dados['senha']) || !isset($dados['classificação'])){
+        if(!isset($dados['nome']) || !isset($dados['email']) || !isset($dados['senha']) || !isset($dados['tipo'])){
             http_response_code(400);
-            echo json_encode(['erro => 'Preencha todos os campos obrigatórios.']);
+            echo json_encode(['erro' => 'Preencha todos os campos obrigatórios.']);
         }
         //Criptografa a senha usando BCRYPT (Segurança da Etapa 3)
-        $senhaHash = password_hash($dados['senha'], PASSWORD_ BCRYPT);
+        $senhaHash = password_hash($dados['senha'], PASSWORD_BCRYPT);
 
         $usuarioModel = new UsuarioRepository();
 
@@ -21,8 +22,8 @@ class UsuarioController {
         $sucesso = $usuarioModel->criar([
             'nome' => $dados['nome'],
             'email' => $dados['email'],
-            'senha' => $dados['senha'],
-            'classificação' => $dados['classificação']//'diretor', 'psicologo', 'paciente'
+            'senha' => $senhaHash,
+            'tipo' => $dados['tipo']//'diretor', 'psicologo', 'paciente'
         ]);
 
         if($sucesso) {
@@ -30,7 +31,7 @@ class UsuarioController {
             echo json_encode(['mensagem' => 'Usuário cadastrado com sucesso.']);
         } else {
             http_response_code(500);
-            echo json_encode(['erro' => 'Erro ao cadastrar usuário. O e-mail já pode estar em uso.']);
+            echo json_encode(['erro' => 'Erro ao cadastrar usuário, O e-mail já pode estar em uso.']);
         }
 
     }
@@ -46,7 +47,7 @@ class UsuarioController {
             return;
         }
 
-        $usuarioModel = new Usuario();
+        $usuarioModel = new UsuarioRepository();
         //Busca o usuário pelo emaol
         $usuario = $usuarioModel->buscarPorEmail($dados['email']);
 
@@ -58,7 +59,7 @@ class UsuarioController {
             http_response_code(200);
             echo json_encode([
                 'mensagem' => 'Login realizado com sucesso.',
-                'usuario' => $usuario //Retorna ID, Nome, Email e Classificação para o React saber quem logou
+                'usuario' => $usuario //Retorna ID, Nome, Email e tipo para o React saber quem logou
             ]);
         } else {
             http_response_code(401);
@@ -66,3 +67,4 @@ class UsuarioController {
         }
     }
 }
+?>

@@ -1,0 +1,21 @@
+### Testar o cadastro de Usuário
+POST http://localhost/ForAll/usuario/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Vinicius Fernandes",
+    "email": "vinicius@email.com",
+    "senha": "123",
+    "tipo": "paciente"
+}
+
+###
+
+### Testar o Login
+POST http://localhost/ForAll/usuario/login
+Content-Type: application/json
+
+{
+    "email": "vinicius@email.com",
+    "senha": "123"
+}
