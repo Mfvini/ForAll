@@ -6,7 +6,7 @@ class Conexao {
     public static function getConexao() {
         $host = 'localhost';
         $port = '3307';
-        $db = 'db_forall';
+        $db = 'db_somos';
         $user = 'root';
         $pass = 'root';
 

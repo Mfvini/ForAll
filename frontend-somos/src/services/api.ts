@@ -2,8 +2,8 @@ import axios from 'axios';
 
 //Define a URL base do back-end no Xampp
 //IMPORTANTE: Altere 'ForALL' para o nome exato da pasta do seu projeto se for diferente!
-const API_BASE_URL = 'http://localhost/ForAll';
-//axios.creat: Cria uma instância pré-configurada do Axios. Toda vez que usarmos o objeto "api", ele já sabe que deve bater em "http://localhost/ForAll" e que vai enviar os dados em formato de JSON.
+const API_BASE_URL = 'http://localhost/Somos';
+//axios.creat: Cria uma instância pré-configurada do Axios. Toda vez que usarmos o objeto "api", ele já sabe que deve bater em "http://localhost/Somos" e que vai enviar os dados em formato de JSON.
 export const api = axios.create({
     baseURL: API_BASE_URL,
     headers: {

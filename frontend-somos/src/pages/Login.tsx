@@ -40,7 +40,7 @@ export const Login: React.FC = () => {
             <div className="card shadow-sm p-4" style={{ width: '100%', maxWidth: '400px', borderRadius: '10px' }}>
                 <div className="card-body">
                     {/* Título do Projeto */}
-                    <h2 className="text-center fw-bold text-primary mb-2">FOR ALL</h2>
+                    <h2 className="text-center fw-bold text-primary mb-2">SOMOS</h2>
                     <p className="text-center text-muted mb-4">Apoio Psicológico e Solidariedade</p>
 
                     {/* Exibição de Alertas do Bootstrap */}
