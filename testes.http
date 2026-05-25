@@ -1,5 +1,5 @@
 ### Testar o cadastro de Usuário
-POST http://localhost/ForAll/usuario/cadastrar
+POST http://localhost/Somos/usuario/cadastrar
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 ###
 
 ### Testar o Login
-POST http://localhost/ForAll/usuario/login
+POST http://localhost/Somos/usuario/login
 Content-Type: application/json
 
 {
