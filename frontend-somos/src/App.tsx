@@ -1,133 +1,71 @@
-import { Login } from './pages/login';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { Login } from './pages/Login';
 
+// Tela Interna do Paciente (Onde vai ficar o mapa de doações e suporte)
+const DashboardPaciente = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="container mt-5">
+      <div className="card p-5 shadow-sm border-start border-4 border-primary">
+        <h1 className="text-primary fw-bold">Painel do Paciente 🌟</h1>
+        <p className="text-muted fs-5">Bem-vindo ao ambiente "S.O.M.O.S". Aqui você terá acesso ao suporte psicológico e ao mapa de pontos de doação.</p>
+        <hr />
+        <button className="btn btn-outline-danger fw-bold" onClick={() => navigate('/')}>Sair do Sistema</button>
+      </div>
+    </div>
+  );
+};
+
+// Tela Interna do Psicólogo
+const DashboardPsicologo = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="container mt-5">
+      <div className="card p-5 shadow-sm border-start border-4 border-success">
+        <h1 className="text-success fw-bold">Painel do Psicólogo 🧠</h1>
+        <p className="text-muted fs-5">Bem-vindo profissional! Aqui você poderá gerenciar suas consultas e apoiar a comunidade.</p>
+        <hr />
+        <button className="btn btn-outline-danger fw-bold" onClick={() => navigate('/')}>Sair do Sistema</button>
+      </div>
+    </div>
+  );
+};
+
+// Tela Interna do Diretor
+const DashboardDiretor = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="container mt-5">
+      <div className="card p-5 shadow-sm border-start border-4 border-warning">
+        <h1 className="text-warning fw-bold">Painel do Diretor 🛡️</h1>
+        <p className="text-muted fs-5">Área administrativa. Gerenciamento geral do sistema SOMOS.</p>
+        <hr />
+        <button className="btn btn-outline-danger fw-bold" onClick={() => navigate('/')}>Sair do Sistema</button>
+      </div>
+    </div>
+  );
+};
+
+// ==========================================
+// 🗺️ MAPEAMENTO DE ROTAS PRINCIPAL
+// ==========================================
 function App() {
   return (
-    //Renderiza diretamente a tela de login que criamos
-    <Login />
+    <BrowserRouter>
+      <Routes>
+        {/* Rota Inicial: Tela de Login */}
+        <Route path="/" element={<Login />} />
+
+        {/* Rotas Internas que o Login vai chamar baseado no tipo do usuário */}
+        <Route path="/dashboard/paciente" element={<DashboardPaciente />} />
+        <Route path="/dashboard/psicologo" element={<DashboardPsicologo />} />
+        <Route path="/dashboard/diretor" element={<DashboardDiretor />} />
+
+        {/* Rota de segurança caso digitem algo inexistente */}
+        <Route path="*" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
-// import heroImg from './assets/hero.png'
-// import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <section id="center">
-//         <div className="hero">
-//           <img src={heroImg} className="base" width="170" height="179" alt="" />
-//           <img src={reactLogo} className="framework" alt="React logo" />
-//           <img src={viteLogo} className="vite" alt="Vite logo" />
-//         </div>
-//         <div>
-//           <h1>Get started</h1>
-//           <p>
-//             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-//           </p>
-//         </div>
-//         <button
-//           type="button"
-//           className="counter"
-//           onClick={() => setCount((count) => count + 1)}
-//         >
-//           Count is {count}
-//         </button>
-//       </section>
-
-//       <div className="ticks"></div>
-
-//       <section id="next-steps">
-//         <div id="docs">
-//           <svg className="icon" role="presentation" aria-hidden="true">
-//             <use href="/icons.svg#documentation-icon"></use>
-//           </svg>
-//           <h2>Documentation</h2>
-//           <p>Your questions, answered</p>
-//           <ul>
-//             <li>
-//               <a href="https://vite.dev/" target="_blank">
-//                 <img className="logo" src={viteLogo} alt="" />
-//                 Explore Vite
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://react.dev/" target="_blank">
-//                 <img className="button-icon" src={reactLogo} alt="" />
-//                 Learn more
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//         <div id="social">
-//           <svg className="icon" role="presentation" aria-hidden="true">
-//             <use href="/icons.svg#social-icon"></use>
-//           </svg>
-//           <h2>Connect with us</h2>
-//           <p>Join the Vite community</p>
-//           <ul>
-//             <li>
-//               <a href="https://github.com/vitejs/vite" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#github-icon"></use>
-//                 </svg>
-//                 GitHub
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://chat.vite.dev/" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#discord-icon"></use>
-//                 </svg>
-//                 Discord
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://x.com/vite_js" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#x-icon"></use>
-//                 </svg>
-//                 X.com
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://bsky.app/profile/vite.dev" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#bluesky-icon"></use>
-//                 </svg>
-//                 Bluesky
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//       </section>
-
-//       <div className="ticks"></div>
-//       <section id="spacer"></section>
-//     </>
-//   )
-// }
-
-// export default App

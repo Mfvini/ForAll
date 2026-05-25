@@ -1,34 +1,59 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Importa o hook de navegação
 import { usuarioService } from '../services/api';
 
 export const Login: React.FC = () => {
-    //Estados do Formulário (TypeScript infere que sãp strings)
+    // Instancia o navegador de rotas
+    const navigate = useNavigate();
+
+    // Estados do Formulário
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
-    //Estados para controle de feedback visual
+    // Estados para controle de feedback visual
     const [carregando, setCarregando] = useState(false);
     const [erro, setErro] = useState<string | null>(null);
     const [sucesso, setSucesso] = useState<string | null>(null);
 
     const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault(); //Evita o recarregamento da página
+        e.preventDefault(); // Evita o recarregamento da página
         setCarregando(true);
         setErro(null);
         setSucesso(null);
 
         try {
-            //Dispara a requisição para o nosso back-end PHP no XAMPP
+            // Dispara a requisição para o nosso back-end PHP no XAMPP
             const resposta = await usuarioService.login({ email, senha });
 
-            //Se o login der certo, exibe a mensagem e mostra quem logou
+            // Se o login der certo, exibe a mensagem de boas-vindas
             setSucesso(`${resposta.mensagem} Bem-vindo, ${resposta.usuario.nome}!`);
+
+            // 2. Inteligência de Redirecionamento Baseado no Perfil/Tipo
+            const tipoUsuario = resposta.usuario.tipo;
+
+            // Aguarda 1.5 segundos exibindo o alerta verde de sucesso antes de mudar de página
+            setTimeout(() => {
+                if (tipoUsuario === 'paciente') {
+                    navigate('/dashboard/paciente');
+                } else if (tipoUsuario === 'psicologo') {
+                    navigate('/dashboard/psicologo');
+                } else if (tipoUsuario === 'diretor') {
+                    navigate('/dashboard/diretor');
+                } else {
+                    // Caso venha algum tipo não mapeado, joga para uma rota padrão segura
+                    navigate('/dashboard');
+                }
+            }, 1500);
+
         } catch (error: any) {
-            //Captura erros de credenciais ou falhas de rede
-            if (error.response && error.response.data && error.response.data.error){
-                setErro(error.response.data.error);
+            // Captura erros estruturados da nossa API ou falhas de rede
+            if (error.response && error.response.data && error.response.data.erro) {
+                setErro(error.response.data.erro);
+            } else if (error.message) {
+                // Trata a mensagem personalizada que adicionamos no catch do api.ts
+                setErro(error.message);
             } else {
-                setErro('Não foi possível conectar ao servidor. Verifique o  XAMPP.');
+                setErro('Não foi possível conectar ao servidor. Verifique o XAMPP.');
             }
         } finally {
             setCarregando(false);
@@ -75,8 +100,8 @@ export const Login: React.FC = () => {
                             />
                         </div>
 
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             className="btn btn-primary w-100 fw-bold py-2"
                             disabled={carregando}
                         >

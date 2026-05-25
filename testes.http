@@ -4,9 +4,9 @@ Content-Type: application/json
 
 {
     "nome": "Vinicius Fernandes",
-    "email": "vinicius@email.com",
+    "email": "vini@email.com",
     "senha": "123",
-    "tipo": "paciente"
+    "tipo": "diretor"
 }
 
 ###
@@ -15,7 +15,8 @@ Content-Type: application/json
 POST http://localhost/Somos/usuario/login
 Content-Type: application/json
 
+
 {
-    "email": "vinicius@email.com",
+    "email": "vini@email.com",
     "senha": "123"
 }

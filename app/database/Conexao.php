@@ -1,7 +1,7 @@
 <?php
 
 class Conexao {
-    private static $instancia;
+    private static PDO $instancia;
 
     public static function getConexao() {
         $host = 'localhost';

@@ -31,7 +31,7 @@ $metodoHttp = $_SERVER['REQUEST_METHOD'];
 // Lógica de Execução Roteada
 if (file_exists($controllerFile)) {
     require_once $controllerFile;
-    
+
     if (class_exists($controllerName)) {
         $controller = new $controllerName();
 
@@ -41,9 +41,11 @@ if (file_exists($controllerFile)) {
                 $controller->cadastrar();
             } elseif ($metodoHttp === 'POST' && isset($url[1]) && $url[1] === 'login') {
                 $controller->login();
+            } elseif ($metodoHttp === 'GET' && isset($url[1]) && $url[1] === 'perfil') {
+                $controller->obterPerfil();
             } else {
                 http_response_code(404);
-                echo json_encode(["error" => "Ação de usuário não encontrada. Use /usuario/cadastrar ou /usuario/login"]);
+                echo json_encode(["error" => "Ação de usuário não encontrada. Use /usuario/cadastrar, /usuario/login ou /usuario/perfil"]);
             }
         } else {
             // Padrão para os outros controllers (chama o index se for GET)
