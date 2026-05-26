@@ -28,6 +28,9 @@ export const Login: React.FC = () => {
             // Se o login der certo, exibe a mensagem de boas-vindas
             setSucesso(`${resposta.mensagem} Bem-vindo, ${resposta.usuario.nome}!`);
 
+            //Salva os dados do usuário convertidos em texto no navegador. 
+            localStorage.setItem('somos_usuario', JSON.stringify(resposta.usuario));
+
             // 2. Inteligência de Redirecionamento Baseado no Perfil/Tipo
             const tipoUsuario = resposta.usuario.tipo;
 
