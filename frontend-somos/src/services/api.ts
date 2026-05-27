@@ -11,46 +11,25 @@ export const api = axios.create({
     },
 });
 
-// Interface para estruturar os dados que o front-end vai enviar no Login
-export interface LoginData {
-    email: string;
-    senha: string;
-}
-
-// Interface para estruturar os dados que o front-end vai enviar no Cadastro
-export interface CadastroData {
-    nome: string;
-    email: string;
-    senha: string;
-    tipo: 'paciente' | 'psicologo' | 'diretor';
-}
-
-// Objeto que agrupa os nossos serviços de autenticação e usuário
+// 1. Serviço de Usuário (Login que já estava funcionando)
 export const usuarioService = {
-    // Função para realizar o Login com try/catch para enviar o erro correto ao Login.tsx
-    login: async (dados: LoginData) => {
-        try {
-            const resposta = await api.post('/usuario/login', dados);
-            return resposta.data;
-        } catch (erro: any) {
-            // Se o PHP respondeu com o erro estruturado (ex: 401 ou 400)
-            if (erro.response && erro.response.data) {
-                throw new Error(erro.response.data.erro || 'Erro ao realizar login.');
-            }
-            throw new Error('Não foi possível conectar ao servidor. Verifique o XAMPP.');
-        }
+    login: async(dados:any) => {
+        // Ajuste o endpoint se no seu roteador dinâmico for diferente (ex: '/usuario/login')
+        const resposta = await api.post('/usuario/login', dados);
+        return resposta.data;
     },
+    cadastro: async (dados:any) => {
+        const resposta =  await api.post('/usuario/cadastro', dados);
+        return resposta.data;
+    }
+};
 
-    // Função para realizar o Cadastro
-    cadastrar: async (dados: CadastroData) => {
-        try {
-            const resposta = await api.post('/usuario/cadastrar', dados);
-            return resposta.data;
-        } catch (erro: any) {
-            if (erro.response && erro.response.data) {
-                throw new Error(erro.response.data.erro || 'Erro ao realizar cadastro.');
-            }
-            throw new Error('Não foi possível conectar ao servidor. Verifique o XAMPP.');
-        }
+// NOVO SERVIÇO: PONTOS DE DOAÇÂO (Sprint 4)
+export const pontoDoacaoService = {
+    listar: async () => {
+        // Chama o endpoint exato que testamos com sucesso no navegador!
+        // Graças ao seu roteador dinâmico, isso vai invocar o PontoDoacaoController
+        const resposta = await api.get('/pontoDoacao');
+        return resposta.data;
     }
 };

@@ -3,10 +3,10 @@ POST http://localhost/Somos/usuario/cadastrar
 Content-Type: application/json
 
 {
-    "nome": "Vinicius Fernandes",
-    "email": "vini@email.com",
+    "nome": "Vinícius Fernandes",
+    "email": "vinii@email.com",
     "senha": "123",
-    "tipo": "diretor"
+    "tipo": "paciente"
 }
 
 ###
@@ -17,6 +17,6 @@ Content-Type: application/json
 
 
 {
-    "email": "vini@email.com",
+    "email": "vinii@email.com",
     "senha": "123"
 }

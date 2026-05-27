@@ -12,11 +12,14 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Se for uma requisição OPTIONS (pré-flight do navegador), encerra aqui
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
     exit;
 }
 
-// Carrega a conexão - Ajustado para a pasta correta (app/models/)
+// 2. Carrega a conexão usando a SUA estrutura de pastas e classe
 require_once 'app/database/Conexao.php';
+$database = new Conexao();
+$db = $database->getConexao(); // Passamos essa conexão para os controllers se necessário
 
 // Pega a URL vinda do .htaccess ou Query String
 $url = isset($_GET['url']) ? explode('/', $_GET['url']) : ['home'];
@@ -33,9 +36,11 @@ if (file_exists($controllerFile)) {
     require_once $controllerFile;
 
     if (class_exists($controllerName)) {
-        $controller = new $controllerName();
 
-        // Roteamento inteligente para o UsuarioController
+        // Injetamos o $db no construtor do controller (como fizemos no PontoDoacaoController)
+        $controller = new $controllerName($db);
+
+        // --- Roteamento inteligente para o UsuarioController ---
         if ($controllerName === 'UsuarioController') {
             if ($metodoHttp === 'POST' && isset($url[1]) && $url[1] === 'cadastrar') {
                 $controller->cadastrar();
@@ -45,10 +50,22 @@ if (file_exists($controllerFile)) {
                 $controller->obterPerfil();
             } else {
                 http_response_code(404);
-                echo json_encode(["error" => "Ação de usuário não encontrada. Use /usuario/cadastrar, /usuario/login ou /usuario/perfil"]);
+                echo json_encode(["error" => "Ação de usuário não encontrada."]);
             }
-        } else {
-            // Padrão para os outros controllers (chama o index se for GET)
+        }
+
+        // --- 🌟 NOVA ROTA: Roteamento para o PontoDoacaoController (Sprint 4) ---
+        elseif ($controllerName === 'PontoDoacaoController') {
+            if ($metodoHttp === 'GET') {
+                $controller->listar(); // Chama o método do nosso novo controller
+            } else {
+                http_response_code(405);
+                echo json_encode(["error" => "Método HTTP não permitido para Pontos de Doação. Use GET."]);
+            }
+        }
+
+        // Padrão para os outros controllers genéricos
+        else {
             if (method_exists($controller, 'index')) {
                 $controller->index();
             } else {
@@ -64,4 +81,5 @@ if (file_exists($controllerFile)) {
     http_response_code(404);
     echo json_encode(["error" => "Rota ou Controller não encontrado."]);
 }
+
 ?>
