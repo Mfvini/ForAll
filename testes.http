@@ -4,9 +4,9 @@ Content-Type: application/json
 
 {
     "nome": "Vinícius Fernandes",
-    "email": "vinii@email.com",
+    "email": "vini.teste.psi@email.com",
     "senha": "123",
-    "tipo": "paciente"
+    "tipo": "psicologo"
 }
 
 ###
@@ -17,6 +17,6 @@ Content-Type: application/json
 
 
 {
-    "email": "vinii@email.com",
+    "email": "vini.teste.psi@email.com",
     "senha": "123"
 }
