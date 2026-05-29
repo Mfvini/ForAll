@@ -45,7 +45,7 @@ export const ListaPsicologos: React.FC = () => {
 
   return (
     <div className="container my-4">
-      <h2 className="mb-4 text-primary text-center fw-bold">Psicólogos Disponíveis</h2>
+      {/* <h1 className="mb-4 text-primary text-center fw-bold">Psicólogos Disponíveis</h1> */}
       
       {psicologos.length === 0 ? (
         <p className="text-muted text-center">Nenhum psicólogo disponível no momento.</p>

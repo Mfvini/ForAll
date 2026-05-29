@@ -30,6 +30,9 @@
   }
 }
 
+/* Import Google Font for sidebar brand */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap');
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -51,10 +54,10 @@
 }
 
 #root {
-  width: 1126px;
+  width: 100%;
   max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
+  margin: 0;
+  text-align: left;
   border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
@@ -108,4 +111,22 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* Sidebar — marca e logo */
+.sidebar .brand-row { display: flex; align-items: center; gap: 0.5rem; }
+.sidebar .sidebar-logo {
+  height: 48px; /* ajuste se quiser maior: 52px */
+  width: auto;
+  display: block;
+  max-width: calc(100% - 56px);
+}
+.sidebar .sidebar-brand {
+  font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-size: 1.125rem; /* ~18px */
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 5px 18px rgba(0,0,0,0.6); /* sombra maior */
+  letter-spacing: 0.6px;
+  transform: translateY(1px);
 }

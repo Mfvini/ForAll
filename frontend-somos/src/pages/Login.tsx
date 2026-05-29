@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 1. Importa o hook de navegação
 import { usuarioService } from '../services/api';
+import logoSomos from '../assets/somos-logo-nome.png';
 
 export const Login: React.FC = () => {
     // Instancia o navegador de rotas
@@ -68,8 +69,7 @@ export const Login: React.FC = () => {
             <div className="card shadow-sm p-4" style={{ width: '100%', maxWidth: '400px', borderRadius: '10px' }}>
                 <div className="card-body">
                     {/* Título do Projeto */}
-                    <h2 className="text-center fw-bold text-primary mb-2">SOMOS</h2>
-                    <p className="text-center text-muted mb-4">Apoio Psicológico e Solidariedade</p>
+                    <img src={logoSomos} alt="Logo Projeto SOMOS" className="img-fluid mb-4" style={{ maxHeight: '80px' }}/>
 
                     {/* Exibição de Alertas do Bootstrap */}
                     {erro && <div className="alert alert-danger py-2 text-center" role="alert">{erro}</div>}
